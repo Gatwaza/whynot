@@ -1,25 +1,36 @@
-from sklearn.neural_network import MLPClassifier
+import pandas as pd
 import joblib
+from sklearn.preprocessing import StandardScaler
+from sklearn.neural_network import MLPClassifier
+from preprocessing import preprocess_data
 
-def train_model(X_train, y_train):
-    # Increase max_iter and adjust learning_rate_init
-    model = MLPClassifier(hidden_layer_sizes=(100,), max_iter=1000, learning_rate_init=0.001, random_state=42)
-    model.fit(X_train, y_train)
-    return model
+# Load data
+train_data = pd.read_csv('/Users/kigali/Desktop/whynot/whynot/data/Heart_Disease_Prediction.csv')
 
-def save_model(model, filepath):
-    joblib.dump(model, filepath)
+# Preprocess data
+X_train, y_train, X_test, y_test = preprocess_data(train_data)
 
-if __name__ == "__main__":
-    from preprocessing import load_data, preprocess_data
-    # Change the path to your dataset location
-    df = load_data('/Users/kigali/Desktop/whynot/whynot/data/Heart_Disease_Prediction.csv')
-    X_train, X_test, y_train, y_test, _ = preprocess_data(df)
-    model = train_model(X_train, y_train)
-    
-    # Ensure the 'models' directory exists
-    import os
-    if not os.path.exists('models'):
-        os.makedirs('models')
-    
-    save_model(model, 'models/mlp_model.pkl')
+# Features to use
+columns = ['Age', 'Sex', 'Chest pain type', 'BP', 'Cholesterol', 
+           'FBS over 120', 'EKG results', 'Max HR', 
+           'Exercise angina', 'ST depression', 'Slope of ST', 
+           'Number of vessels fluro', 'Thallium']
+
+# Scale data
+scaler = StandardScaler()
+X_train_scaled = scaler.fit_transform(X_train[columns])
+
+# Save scaler
+joblib.dump(scaler, '../models/scaler.pkl')
+
+# Train model
+model = MLPClassifier(hidden_layer_sizes=(100, 50), max_iter=1000)
+model.fit(X_train_scaled, y_train)
+
+# Save model
+joblib.dump(model, '../models/mlp_model.pkl')
+
+# Evaluate model (optional)
+X_test_scaled = scaler.transform(X_test[columns])
+accuracy = model.score(X_test_scaled, y_test)
+print(f'Model Accuracy: {accuracy}')
