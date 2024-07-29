@@ -44,3 +44,4 @@ python3 src/model.py
 python3 app.py
 
 ## Testing purpose
+<img width="928" alt="Screenshot 2024-07-29 at 09 25 12" src="https://github.com/user-attachments/assets/4762b6dd-9d99-4caf-a7e1-bd53944d628d">
