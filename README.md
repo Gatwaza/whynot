@@ -42,3 +42,5 @@ python3 src/preprocessing.py
 python3 src/model.py
 
 python3 app.py
+
+## Testing purpose
