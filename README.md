@@ -5,24 +5,19 @@ This project predicts whether a patient has heart disease using a multi-layer pe
 
 ## Project Structure
 whynot/
-│
-├── README.md
-│
-├── notebook/
-│   ├── whynot.ipynb
-│
-├── src/
-│   ├── preprocessing.py
-│   ├── model.py
-│   └── prediction.py
-│
-├── data/
-│   ├── train/
-│   └── test/
-│
-└── models/
-    ├── mlp_model.pkl
-    ├── scaler.pkl
+README.md
+notebook/
+whynot.ipynb
+src/
+preprocessing.py
+model.py
+prediction.py
+data/
+train/
+test/
+models/
+mlp_model.pkl
+scaler.pkl
 
 ## Setup Instructions
 
